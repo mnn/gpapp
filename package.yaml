@@ -1,0 +1,56 @@
+name:                gpapp
+version:             0.1.0.0
+github:              "mnn/gpapp"
+license:             BSD3
+author:              "monnef"
+maintainer:          "http://github.com/mnn"
+copyright:           "2018 monnef"
+
+extra-source-files:
+# - README.md
+# - ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+# description:         Please see the README on Github at <https://github.com/githubuser/gpapp#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- reddit == 0.2.*
+- api-builder == 0.14.*
+- text == 1.2.*
+- transformers == 0.5.*
+- bifunctors == 5.*
+- MissingH == 1.4.*
+- time == 1.8.*
+- regexpr == 0.5.*
+
+library:
+  source-dirs: src
+
+executables:
+  gpapp-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - gpapp
+
+tests:
+  gpapp-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - gpapp

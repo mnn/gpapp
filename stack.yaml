@@ -1,0 +1,9 @@
+flags: {}
+packages:
+- .
+extra-deps:
+- api-builder-0.14.0.0
+- mtlparse-0.1.4.0
+- reddit-0.2.2.2
+- regexpr-0.5.4
+resolver: lts-10.4

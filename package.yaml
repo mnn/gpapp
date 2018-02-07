@@ -29,9 +29,11 @@ dependencies:
 - MissingH == 1.4.*
 - time == 1.8.*
 - regexpr == 0.5.*
+- HTF == 0.13.*
 
 library:
   source-dirs: src
+  exposed: true
 
 executables:
   gpapp-exe:

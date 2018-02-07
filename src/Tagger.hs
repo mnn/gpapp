@@ -3,6 +3,9 @@
 module Tagger( TaggedPost(..)
              , tagPost
              , renderTag
+             , getGenderTagFromTitle
+             , PostTag(..)
+             , Gender(..)
 ) where
 
 import qualified Data.Text as T

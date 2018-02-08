@@ -30,4 +30,5 @@ main = do
   rawPosts <- fromRight <$> getPostsFromGamerPals PostsOptions{poLimit = 10}
   let taggedPosts = map tagPost rawPosts 
 --  forM_ rawPosts $ \post -> io $ printPostInfo post (const "")
+  putStrLn $ "Got " ++ show (length rawPosts) ++ " posts."
   forM_ taggedPosts $ \post -> io $ printTaggedPostInfo post

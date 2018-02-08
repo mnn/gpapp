@@ -8,6 +8,7 @@ module RedditReader ( getPostsFromGamerPals
 import Reddit
 import Reddit.Types.Post
 import Reddit.Types.SearchOptions as SO
+import Reddit.Types.Listing as Listing
 import Utils
 
 import Control.Monad
@@ -49,9 +50,12 @@ runRedditAnonWithUA :: Reddit a -> IO (Either (APIError RedditError) a)
 runRedditAnonWithUA =
   runRedditWith defaultRedditOptions { customUserAgent = Just "reddit-haskell:gpapp:0.1.0.0 (by /u/monnef)" }
 
+subredditToUse = R "GamerPals"
+
 getPostsFromGamerPalsRaw :: PostsOptions -> IO (Either (APIError RedditError) [Post])
 getPostsFromGamerPalsRaw opts = runRedditAnonWithUA $ do
-  Listing _ _ posts <- search (Just $ R "GamerPals") (Options Nothing (Just . poLimit $ opts)) SO.New ""
+--  Listing _ _ posts <- search (Just subredditToUse) (Options Nothing (Just . poLimit $ opts)) SO.New ""
+  Listing _ _ posts <- getPosts' (Options Nothing (Just . poLimit $ opts)) Listing.New (Just subredditToUse)
   return posts
 
 convApiErrToString :: APIError RedditError -> String

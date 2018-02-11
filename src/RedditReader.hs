@@ -3,6 +3,7 @@
 module RedditReader ( getPostsFromGamerPals
                     , printPostInfo
                     , PostsOptions(..)
+                    , PrintPostInfoOptions(..)
 ) where
 
 import Reddit
@@ -21,10 +22,6 @@ import qualified Data.Text.IO as Text
 import Data.Time.Format
 import Data.Time.Clock
 
-getPostContent post = case content post of
-                        SelfPost a b -> a
-                        _ -> "unknown"
-
 getSubredditName :: Post -> Text.Text
 getSubredditName p = getR (subreddit p) where
   getR (R a) = a
@@ -32,14 +29,24 @@ getSubredditName p = getR (subreddit p) where
 formatDate :: UTCTime -> String
 formatDate = formatTime defaultTimeLocale "%x %R"
 
+data PrintPostInfoOptions = 
+  PrintPostInfoOptions {
+    ppioFullText :: Bool
+  }
+
 -- TODO: link
-printPostInfo :: Post -> Text.Text -> IO ()
-printPostInfo post customPart = Text.putStr $
-                         "date : " <> (Text.pack . formatDate . created) post <> "\n" <>
-                         "title: " <> title post <> "\n" <> 
-                         "text : " <> (Text.take 128 . head . Text.lines) (getPostContent post) <> "\n" <>
+printPostInfo :: PrintPostInfoOptions -> Post -> Text.Text -> IO ()
+printPostInfo opts post customPart = Text.putStr $
+                         "title: "  <> title post <> "\n" <> 
+                         "date : "  <> (Text.pack . formatDate . created) post <> "\n" <>
+                         "text : "  <> textFn (getPostContent post) <> "\n" <>
                          customPart <> 
-                         ""        <> "\n"
+                         postDelim  <> "\n\n" where
+                           textFn = if ppioFullText opts then textFnFull else textFnStripped
+                           textFnStripped = Text.take 128 . head . Text.lines
+                           textFnFull x = "\n" <> textDelim <> "\n" <> Text.strip x <> "\n" <> textDelim
+                           textDelim = Text.pack $ replicate 64 '-'
+                           postDelim = Text.pack $ replicate 64 '='
 
 printPostInfoRaw :: Post -> IO ()
 printPostInfoRaw post = Text.putStrLn $

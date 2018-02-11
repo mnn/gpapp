@@ -20,7 +20,7 @@ type MonadStack a = IO (Either (APIError RedditError) a)
 io = liftIO
 
 printTaggedPostInfo :: TaggedPost -> IO()
-printTaggedPostInfo post = printPostInfo (tpPost post) custom where
+printTaggedPostInfo post = printPostInfo PrintPostInfoOptions { ppioFullText = True } (tpPost post) custom where
   custom = "tags : " <> T.intercalate ", " textTags <> "\n" where 
     textTags = map renderTag (tpTags post)
 

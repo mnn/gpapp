@@ -4,3 +4,4 @@ gpapp.cabal
 .idea/
 *.iml
 .HTF/
+test.log

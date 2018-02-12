@@ -30,4 +30,5 @@ main = do
   let taggedPosts = map tagPost rawPosts 
 --  forM_ rawPosts $ \post -> io $ printPostInfo post (const "")
   putStrLn $ "Got " ++ show (length rawPosts) ++ " posts."
+  -- TODO: output options - JSON?
   forM_ taggedPosts $ \post -> io $ printTaggedPostInfo post

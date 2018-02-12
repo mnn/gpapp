@@ -8,7 +8,6 @@ module RedditReader ( getPostsFromGamerPals
 
 import Reddit
 import Reddit.Types.Post
-import Reddit.Types.SearchOptions as SO
 import Reddit.Types.Listing as Listing
 import Utils
 

@@ -5,18 +5,17 @@ module Main where
 import Data.Monoid
 import Control.Monad
 import Control.Monad.IO.Class
-import Control.Arrow ((>>>))
 import qualified Data.Text as T
 
 import Data.Either.Utils
 import Reddit
-import Reddit.Types.SearchOptions as SO
 
 import RedditReader
 import Tagger
  
 type MonadStack a = IO (Either (APIError RedditError) a)
 
+io :: IO a -> IO a 
 io = liftIO
 
 printTaggedPostInfo :: TaggedPost -> IO()

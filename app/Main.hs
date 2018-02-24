@@ -12,6 +12,7 @@ import Reddit
 
 import RedditReader
 import Tagger
+import qualified AppArgsParser as AP
  
 type MonadStack a = IO (Either (APIError RedditError) a)
 
@@ -25,10 +26,13 @@ printTaggedPostInfo post = printPostInfo PrintPostInfoOptions { ppioFullText = T
 
 main :: IO ()
 main = do
-  -- TODO: get limit from args
-  rawPosts <- fromRight <$> getPostsFromGamerPals PostsOptions{poLimit = 10}
+  args <- AP.parseArgs
+  let limitFromArgs = AP.number args
+  when (limitFromArgs < 1) $ error "Invalid limit."
+  rawPosts <- fromRight <$> getPostsFromGamerPals PostsOptions { poLimit = limitFromArgs }
   let taggedPosts = map tagPost rawPosts 
 --  forM_ rawPosts $ \post -> io $ printPostInfo post (const "")
   putStrLn $ "Got " ++ show (length rawPosts) ++ " posts."
   -- TODO: output options - JSON?
-  forM_ taggedPosts $ \post -> io $ printTaggedPostInfo post
+  if AP.json args then putStrLn "TODO: JSON"
+  else forM_ taggedPosts $ \post -> io $ printTaggedPostInfo post

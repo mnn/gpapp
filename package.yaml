@@ -6,7 +6,7 @@ author:              "monnef"
 maintainer:          "http://github.com/mnn"
 copyright:           "2018 monnef"
 
-extra-source-files:
+#extra-source-files:
 # - README.md
 # - ChangeLog.md
 

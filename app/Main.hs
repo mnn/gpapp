@@ -29,7 +29,9 @@ main = do
   args <- AP.parseArgs
   let limitFromArgs = AP.number args
   when (limitFromArgs < 1) $ error "Invalid limit."
-  rawPosts <- fromRight <$> getPostsFromGamerPals PostsOptions { poLimit = limitFromArgs }
+  let options = PostsOptions { poLimit = limitFromArgs
+                             }
+  rawPosts <- fromRight <$> getPostsFromGamerPals options
   let taggedPosts = map tagPost rawPosts 
 --  forM_ rawPosts $ \post -> io $ printPostInfo post (const "")
   putStrLn $ "Got " ++ show (length rawPosts) ++ " posts."
